@@ -2,7 +2,7 @@ import type { ProductConfig } from '../types';
 
 export const nusavaConfig: ProductConfig = {
   slug: 'nusava-b12',
-  name: '2x1 | Nusava® Complejo de Vitamina B12 + B6 + B1',
+  name: 'Nusava® Complejo de Vitamina B12 + B6 + B1',
   tagline: 'Ese cansancio constante es tu cuerpo pidiéndote ayuda. Con vitamina B12, tu día rinde completo y la noche sigue siendo tuya.',
   volume: '60 ml por frasco (120 ml en Combo 2x1)',
   flavor: 'Sabor Frambuesa Natural',
