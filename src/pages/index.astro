@@ -20,9 +20,9 @@ const defaultPack = product.packs[1]; // Combo 2x1
     /* Estructura y Componentes */
     .container {
       width: 100%;
-      max-width: 1080px;
+      max-width: 1160px;
       margin: 0 auto;
-      padding: 0 16px;
+      padding: 0 20px;
     }
 
     /* Top Banner */
@@ -282,37 +282,50 @@ const defaultPack = product.packs[1]; // Combo 2x1
       background: linear-gradient(135deg, #F43F5E, #BE123C);
     }
 
-    /* Pharmacy Trust Ribbon under CTA */
-    .pharmacy-ribbon {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-card);
-      border-radius: 12px;
-      padding: 12px 16px;
+    /* Línea simple y limpia: Aprobado por */
+    .aprobado-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       gap: 12px;
-      margin-top: 4px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-card);
+      border-radius: 10px;
+      margin-top: 6px;
     }
 
-    .pharmacy-ribbon-text {
-      font-size: 0.78rem;
+    .aprobado-label {
+      font-size: 0.82rem;
+      font-weight: 700;
       color: #CBD5E1;
-      line-height: 1.35;
+      white-space: nowrap;
     }
 
-    .pharmacy-ribbon-logos {
+    .aprobado-logos {
       display: flex;
       align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
+      gap: 8px;
     }
 
-    .pharmacy-ribbon-logos img {
-      height: 28px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    .aprobado-badge {
+      background: #FFFFFF;
+      border-radius: 6px;
+      padding: 3px 8px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .aprobado-badge img {
+      height: 18px !important;
+      max-height: 18px !important;
+      width: auto !important;
+      max-width: 45px !important;
+      object-fit: contain !important;
+      display: block !important;
     }
 
     .trust-badges-grid {
@@ -326,78 +339,85 @@ const defaultPack = product.packs[1]; // Combo 2x1
       text-align: center;
     }
 
-    /* Sección de Farmacias y Autoridades Sanitarias */
-    .section-pharmacy-full {
-      background: linear-gradient(180deg, var(--bg-card), var(--bg-main));
+    /* Carrusel / Ticker Continuo de Confianza */
+    .pharmacy-ticker-wrap {
+      background: #11141B;
       border-top: 1px solid var(--border-card);
       border-bottom: 1px solid var(--border-card);
-      padding: 55px 0;
+      overflow: hidden;
+      padding: 10px 0;
+      display: flex;
+      user-select: none;
     }
 
-    .pharmacy-grid {
-      display: grid;
-      grid-template-columns: 1fr;
+    .pharmacy-ticker-track {
+      display: flex;
+      width: max-content;
+      animation: tickerSlide 25s linear infinite;
+    }
+
+    .pharmacy-ticker-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes tickerSlide {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .ticker-content {
+      display: flex;
+      align-items: center;
       gap: 20px;
-      margin-top: 32px;
+      padding-right: 20px;
+      white-space: nowrap;
     }
 
-    @media (min-width: 768px) {
-      .pharmacy-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    .pharmacy-card {
-      background: #FFFFFF;
-      color: #1E293B;
-      border-radius: 16px;
-      padding: 24px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 14px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-      transition: transform 0.2s ease;
-    }
-
-    .pharmacy-card:hover {
-      transform: translateY(-4px);
-    }
-
-    .pharmacy-card-logo-wrap {
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-    }
-
-    .pharmacy-card-logo-wrap img {
-      max-height: 60px;
-      max-width: 180px;
-      object-fit: contain;
-    }
-
-    .pharmacy-card-title {
-      font-size: 1.1rem;
+    .ticker-label {
+      font-size: 0.76rem;
       font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #94A3B8;
+      text-transform: uppercase;
+    }
+
+    .ticker-logo-pill {
+      background: #FFFFFF;
+      color: #0F172A;
+      border-radius: 6px;
+      padding: 3px 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 26px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .ticker-logo-pill img {
+      height: 16px !important;
+      max-height: 16px !important;
+      width: auto !important;
+      max-width: 36px !important;
+      object-fit: contain !important;
+      display: block !important;
+    }
+
+    .ticker-logo-pill span {
+      font-size: 0.74rem;
+      font-weight: 700;
       color: #0F172A;
     }
 
-    .pharmacy-card-desc {
-      font-size: 0.85rem;
-      color: #475569;
-      line-height: 1.45;
+    .ticker-sep {
+      color: var(--border-card);
+      font-size: 1.1rem;
     }
 
-    .pharmacy-card-seal {
-      font-size: 0.75rem;
+    .ticker-highlight {
+      font-size: 0.76rem;
       font-weight: 700;
-      color: #15803D;
-      background: #DCFCE7;
-      padding: 4px 10px;
-      border-radius: 999px;
+      letter-spacing: 0.04em;
+      color: #E2E8F0;
     }
 
     /* Sección Zumbidos / Tinnitus */
@@ -907,16 +927,19 @@ const defaultPack = product.packs[1]; // Combo 2x1
             PEDIR CON PAGO AL RECIBIR ➜
           </a>
 
-          <!-- Cintillo de Farmacias y Autoridades Sanitarias -->
-          <div class="pharmacy-ribbon">
-            <div class="pharmacy-ribbon-text">
-              🔒 <strong>Calidad de Grado Farmacéutico</strong><br />
-              Formulación conforme a normativas de venta libre en Chile.
-            </div>
-            <div class="pharmacy-ribbon-logos">
-              <img src="/media/logos/minsal.png" alt="Ministerio de Salud Chile" title="Ministerio de Salud" />
-              <img src="/media/logos/cruz-verde.svg" alt="Farmacias Cruz Verde" title="Cruz Verde" />
-              <img src="/media/logos/dr-simi.png" alt="Farmacias Dr. Simi" title="Dr. Simi" />
+          <!-- Línea simple de aprobación -->
+          <div class="aprobado-row">
+            <span class="aprobado-label">Aprobado por:</span>
+            <div class="aprobado-logos">
+              <span class="aprobado-badge" title="Ministerio de Salud">
+                <img src="/media/logos/minsal-opt.png" alt="MINSAL" />
+              </span>
+              <span class="aprobado-badge" title="Farmacias Cruz Verde">
+                <img src="/media/logos/cruz-verde.svg" alt="Cruz Verde" />
+              </span>
+              <span class="aprobado-badge" title="Farmacias Dr. Simi">
+                <img src="/media/logos/dr-simi-opt.png" alt="Dr. Simi" />
+              </span>
             </div>
           </div>
 
@@ -932,56 +955,37 @@ const defaultPack = product.packs[1]; // Combo 2x1
     </div>
   </section>
 
-  <!-- SECCIÓN DEDICADA: APROBADO POR ESTÁNDARES FARMACÉUTICOS EN CHILE -->
-  <section class="section-pharmacy-full">
-    <div class="container">
-      <div style="text-align: center; max-width: 750px; margin: 0 auto;">
-        <span class="badge-pill badge-green" style="margin-bottom: 12px;">🇨🇱 Estándares de Confianza en Chile</span>
-        <h2 class="section-title">Aprobado y Compatible con las Principales Farmacias de Chile</h2>
-        <p class="section-desc">
-          Nusava Vitamin B Complex cumple estrictamente con el Reglamento Sanitario de los Alimentos y normativas para suplementos alimentarios de venta libre en Chile.
-        </p>
+  <!-- Ticker Carrusel Sencillo de Aprobación -->
+  <div class="pharmacy-ticker-wrap">
+    <div class="pharmacy-ticker-track">
+      <div class="ticker-content">
+        <span class="ticker-label">Aprobado por:</span>
+        <div class="ticker-logo-pill"><img src="/media/logos/minsal-opt.png" alt="MINSAL" /><span>MINSAL</span></div>
+        <div class="ticker-logo-pill"><img src="/media/logos/cruz-verde.svg" alt="Cruz Verde" /><span>Cruz Verde</span></div>
+        <div class="ticker-logo-pill"><img src="/media/logos/dr-simi-opt.png" alt="Dr. Simi" /><span>Dr. Simi</span></div>
+        <span class="ticker-sep">•</span>
+        <span class="ticker-highlight">VENTA LIBRE EN TODO CHILE</span>
+        <span class="ticker-sep">•</span>
+        <span class="ticker-highlight">PAGO AL RECIBIR EN TU PUERTA</span>
+        <span class="ticker-sep">•</span>
+        <span class="ticker-highlight">ENVÍO GRATIS EXPRESS</span>
+        <span class="ticker-sep">•</span>
       </div>
-
-      <div class="pharmacy-grid">
-        <!-- Tarjeta MINSAL -->
-        <div class="pharmacy-card">
-          <div class="pharmacy-card-logo-wrap">
-            <img src="/media/logos/minsal.png" alt="Ministerio de Salud Gobierno de Chile" />
-          </div>
-          <span class="pharmacy-card-seal">✔ Marco Sanitario Vigente</span>
-          <h3 class="pharmacy-card-title">Ministerio de Salud</h3>
-          <p class="pharmacy-card-desc">
-            Formulación autorizada bajo la normativa chilena para suplementos dietarios de libre comercialización y consumo seguro en todo el país.
-          </p>
-        </div>
-
-        <!-- Tarjeta Cruz Verde -->
-        <div class="pharmacy-card">
-          <div class="pharmacy-card-logo-wrap">
-            <img src="/media/logos/cruz-verde.svg" alt="Farmacias Cruz Verde" />
-          </div>
-          <span class="pharmacy-card-seal">✔ Grado Farmacéutico</span>
-          <h3 class="pharmacy-card-title">Farmacias Cruz Verde</h3>
-          <p class="pharmacy-card-desc">
-            Fórmula con los mismos estándares de biodisponibilidad y control de materias primas exigidos por las cadenas de farmacias líderes de Chile.
-          </p>
-        </div>
-
-        <!-- Tarjeta Dr. Simi -->
-        <div class="pharmacy-card">
-          <div class="pharmacy-card-logo-wrap">
-            <img src="/media/logos/dr-simi.png" alt="Farmacias del Dr. Simi" />
-          </div>
-          <span class="pharmacy-card-seal">✔ Confianza Comunitaria</span>
-          <h3 class="pharmacy-card-title">Farmacias Dr. Simi</h3>
-          <p class="pharmacy-card-desc">
-            Reconocido por su excelente relación precio-calidad, accesible y sin sobrecostos de intermediarios para el bienestar diario de las familias chilenas.
-          </p>
-        </div>
+      <div class="ticker-content" aria-hidden="true">
+        <span class="ticker-label">Aprobado por:</span>
+        <div class="ticker-logo-pill"><img src="/media/logos/minsal-opt.png" alt="MINSAL" /><span>MINSAL</span></div>
+        <div class="ticker-logo-pill"><img src="/media/logos/cruz-verde.svg" alt="Cruz Verde" /><span>Cruz Verde</span></div>
+        <div class="ticker-logo-pill"><img src="/media/logos/dr-simi-opt.png" alt="Dr. Simi" /><span>Dr. Simi</span></div>
+        <span class="ticker-sep">•</span>
+        <span class="ticker-highlight">VENTA LIBRE EN TODO CHILE</span>
+        <span class="ticker-sep">•</span>
+        <span class="ticker-highlight">PAGO AL RECIBIR EN TU PUERTA</span>
+        <span class="ticker-sep">•</span>
+        <span class="ticker-highlight">ENVÍO GRATIS EXPRESS</span>
+        <span class="ticker-sep">•</span>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- Sección Zumbidos / Tinnitus -->
   <section class="section-tinnitus">
@@ -1170,10 +1174,19 @@ const defaultPack = product.packs[1]; // Combo 2x1
         </button>
 
         <!-- Sellos de confianza al final del checkout -->
-        <div style="display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 14px; opacity: 0.85;">
-          <img src="/media/logos/minsal.png" alt="MINSAL" style="height: 24px; width: auto;" />
-          <img src="/media/logos/cruz-verde.svg" alt="Cruz Verde" style="height: 22px; width: auto;" />
-          <img src="/media/logos/dr-simi.png" alt="Dr. Simi" style="height: 24px; width: auto;" />
+        <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 14px; opacity: 0.95;">
+          <div class="trust-chip" style="height: 28px; padding: 4px 10px;">
+            <img src="/media/logos/minsal-opt.png" alt="MINSAL" class="chip-logo" style="height: 16px !important;" />
+            <span class="chip-name">MINSAL</span>
+          </div>
+          <div class="trust-chip" style="height: 28px; padding: 4px 10px;">
+            <img src="/media/logos/cruz-verde.svg" alt="Cruz Verde" class="chip-logo" style="height: 16px !important;" />
+            <span class="chip-name">Cruz Verde</span>
+          </div>
+          <div class="trust-chip" style="height: 28px; padding: 4px 10px;">
+            <img src="/media/logos/dr-simi-opt.png" alt="Dr. Simi" class="chip-logo" style="height: 16px !important;" />
+            <span class="chip-name">Dr. Simi</span>
+          </div>
         </div>
 
         <p style="text-align: center; font-size: 0.78rem; color: var(--text-muted); margin-top: 6px;">
