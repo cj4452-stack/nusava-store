@@ -477,29 +477,134 @@ const defaultPack = product.packs[1]; // Combo 2x1
       color: #E2E8F0;
     }
 
-    /* Sección Zumbidos / Tinnitus */
-    .section-tinnitus {
-      background: var(--bg-main);
-      padding: 60px 0;
+    /* Sección Cuadrantes de Energía (Competidor Exacto) */
+    .section-energia-dia {
+      background: linear-gradient(180deg, var(--bg-card), var(--bg-main));
+      border-top: 1px solid var(--border-card);
+      border-bottom: 1px solid var(--border-card);
+      padding: 65px 0;
     }
 
-    .tinnitus-card {
-      background: var(--bg-card-alt);
-      border: 1px solid rgba(225, 29, 72, 0.3);
-      border-radius: 20px;
-      padding: 36px 24px;
-      position: relative;
-      overflow: hidden;
+    .energia-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
 
-    .tinnitus-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 6px;
-      height: 100%;
-      background: var(--b12-red);
+    .cuadrantes-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 36px;
+    }
+
+    @media (min-width: 768px) {
+      .cuadrantes-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .cuadrante-card {
+      background: #141820;
+      border: 1px solid var(--border-card);
+      border-radius: 18px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .cuadrante-card:hover {
+      border-color: rgba(245, 158, 11, 0.45);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .cuadrante-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .cuadrante-pill {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.12);
+      color: #FCD34D;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      letter-spacing: 0.04em;
+    }
+
+    .cuadrante-icon {
+      font-size: 1.15rem;
+    }
+
+    .cuadrante-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.3;
+    }
+
+    .cuadrante-desc {
+      font-size: 0.84rem;
+      color: #94A3B8;
+      line-height: 1.5;
+    }
+
+    .cuadrante-callout-bar {
+      background: rgba(245, 158, 11, 0.07);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 14px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 32px;
+      text-align: center;
+    }
+
+    .callout-check {
+      background: #F59E0B;
+      color: #0F172A;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .callout-text {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+    }
+
+    .callout-text strong {
+      color: #FFFFFF;
+    }
+
+    .callout-text span {
+      color: #FCD34D;
     }
 
     .section-title {
@@ -960,19 +1065,19 @@ const defaultPack = product.packs[1]; // Combo 2x1
           <h1 class="product-title">{product.name}</h1>
           <p class="product-tagline">{product.tagline}</p>
 
-          <!-- Caja de Enfoque Principal (Competidor Hook: Tinnitus + 80% menos en 17 días) -->
+          <!-- Caja de Enfoque Principal (Competidor Hook: Más que una Vitamina) -->
           <div class="competitor-focus-box">
             <div class="focus-box-header">
-              <span class="focus-badge">🎯 ENFOQUE PRINCIPAL</span>
-              <strong>Personas con Tinnitus o Zumbidos en los Oídos</strong>
+              <span class="focus-badge">MÁS QUE UNA VITAMINA</span>
+              <strong>No buscas más B12. Buscas volver a sentir que tu día te alcanza.</strong>
             </div>
             <p class="focus-stat-text">
-              👉 <strong>5 gotas al día de forma sublingual:</strong> Más de 10.000 clientes reportan hasta un <strong>80% menos de zumbidos</strong> a los 17 días tomando el complejo vitamínico B12.
+              Tu trabajo, tu familia y tu rutina no se detienen. NUSAVA aporta vitaminas del complejo B para complementar tu bienestar diario de forma práctica.
             </p>
             <div class="focus-bullets">
-              <div>✔ <strong>Apoyo al Sistema Nervioso:</strong> La B12 protege la mielina del nervio auditivo.</div>
-              <div>✔ <strong>Mejor Descanso Nocturno:</strong> Ayuda a calmar los pitidos en el silencio.</div>
-              <div>✔ <strong>Gotero Sublingual Sabor Frambuesa:</strong> Absorción en segundos sin pastillas.</div>
+              <div>🔋 <strong>Que todavía te quede batería:</strong> Que el trabajo no se lleve toda tu energía. Deja espacio para ti y tu familia.</div>
+              <div>🧠 <strong>Sentirte más presente:</strong> Afrontar responsabilidades con mayor claridad mental y enfoque sostenido.</div>
+              <div>☀️ <strong>Empezar con otra disposición:</strong> Que tu día no arranque sintiendo que tu batería ya está a la mitad.</div>
             </div>
           </div>
 
@@ -1060,24 +1165,73 @@ const defaultPack = product.packs[1]; // Combo 2x1
     </div>
   </div>
 
-  <!-- Sección Zumbidos / Tinnitus -->
-  <section class="section-tinnitus">
+  <!-- Sección Cuadrantes: Más que una Vitamina (Screenshot Competidor) -->
+  <section class="section-energia-dia">
     <div class="container">
-      <div class="tinnitus-card">
-        <span class="badge-pill badge-red" style="margin-bottom: 14px;">🎯 Enfoque Especial en Salud Auditiva</span>
-        <h2 class="section-title">¿Sientes zumbidos, pitidos o silbidos constantes en los oídos?</h2>
+      <div class="energia-header">
+        <span class="badge-pill badge-gold" style="margin-bottom: 8px;">MÁS QUE UNA VITAMINA</span>
+        <h2 class="section-title">No buscas más B12.<br />Buscas volver a sentir que tu día te alcanza.</h2>
         <p class="section-desc">
-          El <strong>tinnitus (acúfenos)</strong> suele intensificarse durante la noche o en el silencio. 
-          Múltiples estudios señalan que el déficit de vitaminas del complejo B —especialmente la <strong>B12 (Metilcobalamina)</strong>— debilita la mielina que recubre las conexiones del nervio auditivo, generando hiperexcitabilidad e interferencias sonoras.
+          Tu trabajo, tu familia y tu rutina no se detienen. NUSAVA aporta vitaminas del complejo B para complementar tu bienestar diario de forma práctica.
         </p>
+      </div>
 
-        <div class="claims-list">
-          {product.tinnitusClaims.map((claim) => (
-            <div class="claim-item">
-              <span class="claim-icon">✔</span>
-              <span>{claim}</span>
-            </div>
-          ))}
+      <div class="cuadrantes-grid">
+        <!-- Cuadrante 1: Después del trabajo -->
+        <div class="cuadrante-card">
+          <div class="cuadrante-top">
+            <span class="cuadrante-pill">DESPUÉS DEL TRABAJO</span>
+            <span class="cuadrante-icon">🔋</span>
+          </div>
+          <h3 class="cuadrante-title">Que todavía te quede batería</h3>
+          <p class="cuadrante-desc">
+            Que el trabajo no se lleve toda tu energía. Deja espacio para tu familia, tus planes y para ti.
+          </p>
+        </div>
+
+        <!-- Cuadrante 2: Mente en el día -->
+        <div class="cuadrante-card">
+          <div class="cuadrante-top">
+            <span class="cuadrante-pill">MENTE EN EL DÍA</span>
+            <span class="cuadrante-icon">🧠</span>
+          </div>
+          <h3 class="cuadrante-title">Sentirte más presente</h3>
+          <p class="cuadrante-desc">
+            Afrontar tus responsabilidades con mayor claridad y sentir que cada tarea no cuesta el doble.
+          </p>
+        </div>
+
+        <!-- Cuadrante 3: Tiempo para ti -->
+        <div class="cuadrante-card">
+          <div class="cuadrante-top">
+            <span class="cuadrante-pill">TIEMPO PARA TI</span>
+            <span class="cuadrante-icon">⏱️</span>
+          </div>
+          <h3 class="cuadrante-title">Volver a hacer lo que disfrutas</h3>
+          <p class="cuadrante-desc">
+            Caminar, salir, entrenar o disfrutar tus hobbies sin sentir que ya no te queda nada.
+          </p>
+        </div>
+
+        <!-- Cuadrante 4: Desde la mañana -->
+        <div class="cuadrante-card">
+          <div class="cuadrante-top">
+            <span class="cuadrante-pill">DESDE LA MAÑANA</span>
+            <span class="cuadrante-icon">☀️</span>
+          </div>
+          <h3 class="cuadrante-title">Empezar con otra disposición</h3>
+          <p class="cuadrante-desc">
+            Que tu día no comience sintiendo que tu batería ya está a la mitad.
+          </p>
+        </div>
+      </div>
+
+      <!-- Barra inferior destacada de la captura -->
+      <div class="cuadrante-callout-bar">
+        <span class="callout-check">✔</span>
+        <div class="callout-text">
+          <strong>Tu día no va a exigirte menos.</strong>
+          <span>Cuida lo que le entregas a tu cuerpo.</span>
         </div>
       </div>
     </div>
