@@ -1,0 +1,1334 @@
+---
+import '../styles/base.css';
+import { nusavaConfig } from '../products/nusava/config';
+import { REGIONES_CHILE } from '../lib/chile-regiones';
+import { formatCLP } from '../lib/currency';
+
+const product = nusavaConfig;
+const defaultPack = product.packs[1]; // Combo 2x1
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{product.name} | Tienda Oficial Chile</title>
+  <meta name="description" content={product.tagline} />
+  <link rel="icon" type="image/svg+xml" href="/media/nusava/producto-caja-frascos.jpg" />
+  <style>
+    /* Estructura y Componentes */
+    .container {
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Top Banner */
+    .announcement-bar {
+      background: linear-gradient(90deg, #991B1B, #E11D48);
+      color: #FFFFFF;
+      text-align: center;
+      padding: 9px 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    /* Header */
+    header {
+      background: rgba(11, 13, 17, 0.95);
+      border-bottom: 1px solid var(--border-card);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(8px);
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .logo-badge {
+      background: var(--vegan-green);
+      color: #FFFFFF;
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 800;
+    }
+
+    /* Hero Grid */
+    .hero-section {
+      padding: 28px 0 40px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    @media (min-width: 768px) {
+      .hero-grid {
+        grid-template-columns: 1.1fr 1fr;
+        align-items: start;
+      }
+    }
+
+    /* Galería */
+    .gallery-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .main-image-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .main-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .thumbs-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .thumb-btn {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      background: var(--bg-card);
+      cursor: pointer;
+      aspect-ratio: 1 / 1;
+      padding: 0;
+    }
+
+    .thumb-btn.active {
+      border-color: var(--b12-red);
+    }
+
+    .thumb-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Buy Box */
+    .buy-box {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .ratings-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .stars {
+      color: var(--gold-star);
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+    }
+
+    .product-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #FFFFFF;
+    }
+
+    .product-tagline {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Packs Selector */
+    .packs-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .pack-card {
+      border: 2px solid var(--border-card);
+      border-radius: 14px;
+      background: var(--bg-card);
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .pack-card.selected {
+      border-color: var(--b12-red);
+      background: rgba(225, 29, 72, 0.08);
+    }
+
+    .pack-card input[type="radio"] {
+      display: none;
+    }
+
+    .pack-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .pack-badge {
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      background: var(--b12-red);
+      color: #FFFFFF;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    .pack-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .pack-bottles {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .pack-right {
+      text-align: right;
+    }
+
+    .pack-price {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #FFFFFF;
+    }
+
+    .pack-old-price {
+      font-size: 0.85rem;
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .pack-savings {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #4ADE80;
+    }
+
+    /* CTA Button */
+    .cta-main {
+      background: linear-gradient(135deg, var(--b12-red), #991B1B);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 12px;
+      padding: 18px 24px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      transition: all 0.2s ease;
+    }
+
+    .cta-main:hover {
+      background: linear-gradient(135deg, #F43F5E, #BE123C);
+    }
+
+    /* Pharmacy Trust Ribbon under CTA */
+    .pharmacy-ribbon {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .pharmacy-ribbon-text {
+      font-size: 0.78rem;
+      color: #CBD5E1;
+      line-height: 1.35;
+    }
+
+    .pharmacy-ribbon-logos {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .pharmacy-ribbon-logos img {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
+
+    .trust-badges-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-card);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Sección de Farmacias y Autoridades Sanitarias */
+    .section-pharmacy-full {
+      background: linear-gradient(180deg, var(--bg-card), var(--bg-main));
+      border-top: 1px solid var(--border-card);
+      border-bottom: 1px solid var(--border-card);
+      padding: 55px 0;
+    }
+
+    .pharmacy-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    @media (min-width: 768px) {
+      .pharmacy-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .pharmacy-card {
+      background: #FFFFFF;
+      color: #1E293B;
+      border-radius: 16px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 14px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease;
+    }
+
+    .pharmacy-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .pharmacy-card-logo-wrap {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .pharmacy-card-logo-wrap img {
+      max-height: 60px;
+      max-width: 180px;
+      object-fit: contain;
+    }
+
+    .pharmacy-card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #0F172A;
+    }
+
+    .pharmacy-card-desc {
+      font-size: 0.85rem;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    .pharmacy-card-seal {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #15803D;
+      background: #DCFCE7;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    /* Sección Zumbidos / Tinnitus */
+    .section-tinnitus {
+      background: var(--bg-main);
+      padding: 60px 0;
+    }
+
+    .tinnitus-card {
+      background: var(--bg-card-alt);
+      border: 1px solid rgba(225, 29, 72, 0.3);
+      border-radius: 20px;
+      padding: 36px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tinnitus-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: var(--b12-red);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+      line-height: 1.25;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .claims-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 768px) {
+      .claims-list {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .claim-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(11, 13, 17, 0.6);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border-card);
+      font-size: 0.95rem;
+    }
+
+    .claim-icon {
+      font-size: 1.2rem;
+      color: #4ADE80;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Sección Doctor */
+    .section-doctor {
+      padding: 60px 0;
+      background: var(--bg-card-alt);
+    }
+
+    .doctor-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .doctor-grid {
+        grid-template-columns: 1fr 1.3fr;
+      }
+    }
+
+    .doctor-img-wrap {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid var(--border-card);
+      aspect-ratio: 4 / 5;
+    }
+
+    .doctor-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .doctor-quote {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: #E2E8F0;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      border-left: 4px solid var(--vegan-green);
+      padding-left: 18px;
+    }
+
+    /* Ingredientes Paleta de Caja */
+    .ingredients-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 30px;
+    }
+
+    @media (min-width: 768px) {
+      .ingredients-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .ing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 14px;
+      padding: 20px 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ing-card-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+    }
+
+    .ing-dose {
+      font-size: 1.35rem;
+      font-weight: 900;
+      margin: 10px 0 4px;
+    }
+
+    .ing-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+
+    .ing-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Rutina 3 Pasos */
+    .routine-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    @media (min-width: 768px) {
+      .routine-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .routine-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .routine-img {
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .routine-body {
+      padding: 20px 16px;
+      flex-grow: 1;
+    }
+
+    .routine-step-num {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      background: var(--b1-amber);
+      color: #000000;
+      font-weight: 900;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      font-size: 0.88rem;
+    }
+
+    .routine-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+
+    .routine-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Testimonios */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    @media (min-width: 768px) {
+      .testimonials-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .testim-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .testim-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .testim-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--b12-red);
+    }
+
+    .testim-meta h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .testim-meta p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .testim-comment {
+      font-size: 0.9rem;
+      color: #D1D5DB;
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    /* Checkout Form Section */
+    .section-checkout {
+      background: var(--bg-card);
+      border: 2px solid var(--b12-red);
+      border-radius: 24px;
+      padding: 36px 20px;
+      margin: 60px 0;
+      position: relative;
+    }
+
+    .checkout-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #E2E8F0;
+    }
+
+    .form-group input,
+    .form-group select {
+      background: var(--bg-main);
+      border: 1px solid var(--border-card);
+      border-radius: 10px;
+      padding: 14px 16px;
+      color: #FFFFFF;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--b12-red);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 768px) {
+      .form-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .order-summary-box {
+      background: var(--bg-main);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0;
+    }
+
+    /* FAQ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      padding: 16px 20px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-answer {
+      padding: 0 20px 16px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Sticky Bottom Bar */
+    .sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(11, 13, 17, 0.98);
+      border-top: 1px solid var(--border-card);
+      padding: 12px 16px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .sticky-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sticky-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .sticky-price {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--b12-red);
+    }
+
+    .sticky-btn {
+      background: linear-gradient(135deg, var(--b12-red), #991B1B);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <div class="announcement-bar">
+    🚚 ENVÍO GRATIS A TODO CHILE · 📦 PAGO CONTRA ENTREGA (Pagas en efectivo o transferencia al recibir)
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo">
+        NUSAVA <span class="logo-badge">CHILE</span>
+      </div>
+      <div class="header-badges">
+        <span class="badge-pill badge-green">🇨🇱 Stock Disponible</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Buy Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        
+        <!-- Galería de Fotos -->
+        <div class="gallery-container">
+          <div class="main-image-wrap">
+            <img id="mainImage" src="/media/nusava/producto-caja-frascos.jpg" alt="Nusava Vitamina B12 Complejo" />
+          </div>
+          <div class="thumbs-row">
+            <button class="thumb-btn active" onclick="changeImage('/media/nusava/producto-caja-frascos.jpg', this)">
+              <img src="/media/nusava/producto-caja-frascos.jpg" alt="Producto oficial" />
+            </button>
+            <button class="thumb-btn" onclick="changeImage('/media/nusava/rutina-cocina.jpg', this)">
+              <img src="/media/nusava/rutina-cocina.jpg" alt="Rutina en cocina" />
+            </button>
+            <button class="thumb-btn" onclick="changeImage('/media/nusava/ugc-selfie.jpg', this)">
+              <img src="/media/nusava/ugc-selfie.jpg" alt="Testimonio selfie" />
+            </button>
+            <button class="thumb-btn" onclick="changeImage('/media/nusava/enfoque-escritorio.jpg', this)">
+              <img src="/media/nusava/enfoque-escritorio.jpg" alt="Enfoque y trabajo" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Buy Box -->
+        <div class="buy-box">
+          <div class="ratings-row">
+            <span class="stars">★★★★★</span>
+            <span><strong>4.8/5</strong> (+14.390 clientes)</span>
+          </div>
+
+          <h1 class="product-title">{product.name}</h1>
+          <p class="product-tagline">{product.tagline}</p>
+
+          <!-- Packs Selector -->
+          <div class="packs-selector" id="packsContainer">
+            {product.packs.map((pack) => (
+              <label class={`pack-card ${pack.isPopular ? 'selected' : ''}`} data-pack-id={pack.id} data-price={pack.finalPrice} data-title={pack.title}>
+                {pack.badge && <span class="pack-badge">{pack.badge}</span>}
+                <div class="pack-left">
+                  <span class="pack-name">{pack.title}</span>
+                  <span class="pack-bottles">{pack.bottles * 60} ml en total · {pack.bottles * 40} dosis</span>
+                </div>
+                <div class="pack-right">
+                  <div class="pack-price">{formatCLP(pack.finalPrice)}</div>
+                  <div class="pack-old-price">{formatCLP(pack.originalPrice)}</div>
+                  <div class="pack-savings">Ahorras {formatCLP(pack.savings)}</div>
+                </div>
+                <input type="radio" name="pack_selection" value={pack.id} checked={pack.isPopular} />
+              </label>
+            ))}
+          </div>
+
+          <!-- Botón Scroll al Checkout -->
+          <a href="#checkoutSection" class="cta-main btn-pulse">
+            PEDIR CON PAGO AL RECIBIR ➜
+          </a>
+
+          <!-- Cintillo de Farmacias y Autoridades Sanitarias -->
+          <div class="pharmacy-ribbon">
+            <div class="pharmacy-ribbon-text">
+              🔒 <strong>Calidad de Grado Farmacéutico</strong><br />
+              Formulación conforme a normativas de venta libre en Chile.
+            </div>
+            <div class="pharmacy-ribbon-logos">
+              <img src="/media/logos/minsal.png" alt="Ministerio de Salud Chile" title="Ministerio de Salud" />
+              <img src="/media/logos/cruz-verde.svg" alt="Farmacias Cruz Verde" title="Cruz Verde" />
+              <img src="/media/logos/dr-simi.png" alt="Farmacias Dr. Simi" title="Dr. Simi" />
+            </div>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="trust-badges-grid">
+            <div>📦 <strong>Pago Contra Entrega</strong><br>Pagas en tu puerta</div>
+            <div>⚡ <strong>Despacho Express</strong><br>Chilexpress / Starken</div>
+            <div>🌿 <strong>100% Vegano</strong><br>Sin Gluten · Non GMO</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DEDICADA: APROBADO POR ESTÁNDARES FARMACÉUTICOS EN CHILE -->
+  <section class="section-pharmacy-full">
+    <div class="container">
+      <div style="text-align: center; max-width: 750px; margin: 0 auto;">
+        <span class="badge-pill badge-green" style="margin-bottom: 12px;">🇨🇱 Estándares de Confianza en Chile</span>
+        <h2 class="section-title">Aprobado y Compatible con las Principales Farmacias de Chile</h2>
+        <p class="section-desc">
+          Nusava Vitamin B Complex cumple estrictamente con el Reglamento Sanitario de los Alimentos y normativas para suplementos alimentarios de venta libre en Chile.
+        </p>
+      </div>
+
+      <div class="pharmacy-grid">
+        <!-- Tarjeta MINSAL -->
+        <div class="pharmacy-card">
+          <div class="pharmacy-card-logo-wrap">
+            <img src="/media/logos/minsal.png" alt="Ministerio de Salud Gobierno de Chile" />
+          </div>
+          <span class="pharmacy-card-seal">✔ Marco Sanitario Vigente</span>
+          <h3 class="pharmacy-card-title">Ministerio de Salud</h3>
+          <p class="pharmacy-card-desc">
+            Formulación autorizada bajo la normativa chilena para suplementos dietarios de libre comercialización y consumo seguro en todo el país.
+          </p>
+        </div>
+
+        <!-- Tarjeta Cruz Verde -->
+        <div class="pharmacy-card">
+          <div class="pharmacy-card-logo-wrap">
+            <img src="/media/logos/cruz-verde.svg" alt="Farmacias Cruz Verde" />
+          </div>
+          <span class="pharmacy-card-seal">✔ Grado Farmacéutico</span>
+          <h3 class="pharmacy-card-title">Farmacias Cruz Verde</h3>
+          <p class="pharmacy-card-desc">
+            Fórmula con los mismos estándares de biodisponibilidad y control de materias primas exigidos por las cadenas de farmacias líderes de Chile.
+          </p>
+        </div>
+
+        <!-- Tarjeta Dr. Simi -->
+        <div class="pharmacy-card">
+          <div class="pharmacy-card-logo-wrap">
+            <img src="/media/logos/dr-simi.png" alt="Farmacias del Dr. Simi" />
+          </div>
+          <span class="pharmacy-card-seal">✔ Confianza Comunitaria</span>
+          <h3 class="pharmacy-card-title">Farmacias Dr. Simi</h3>
+          <p class="pharmacy-card-desc">
+            Reconocido por su excelente relación precio-calidad, accesible y sin sobrecostos de intermediarios para el bienestar diario de las familias chilenas.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Zumbidos / Tinnitus -->
+  <section class="section-tinnitus">
+    <div class="container">
+      <div class="tinnitus-card">
+        <span class="badge-pill badge-red" style="margin-bottom: 14px;">🎯 Enfoque Especial en Salud Auditiva</span>
+        <h2 class="section-title">¿Sientes zumbidos, pitidos o silbidos constantes en los oídos?</h2>
+        <p class="section-desc">
+          El <strong>tinnitus (acúfenos)</strong> suele intensificarse durante la noche o en el silencio. 
+          Múltiples estudios señalan que el déficit de vitaminas del complejo B —especialmente la <strong>B12 (Metilcobalamina)</strong>— debilita la mielina que recubre las conexiones del nervio auditivo, generando hiperexcitabilidad e interferencias sonoras.
+        </p>
+
+        <div class="claims-list">
+          {product.tinnitusClaims.map((claim) => (
+            <div class="claim-item">
+              <span class="claim-icon">✔</span>
+              <span>{claim}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección Respaldo Médico -->
+  <section class="section-doctor">
+    <div class="container">
+      <div class="doctor-grid">
+        <div class="doctor-img-wrap">
+          <img src="/media/nusava/doctor.jpg" alt="Doctor en consulta médica" />
+        </div>
+        <div>
+          <span class="badge-pill badge-green" style="margin-bottom: 12px;">👨‍⚕️ Criterio Médico & Biodisponibilidad</span>
+          <h2 class="section-title">¿Por qué el formato líquido sublingual supera a las cápsulas?</h2>
+          <blockquote class="doctor-quote">
+            "Alrededor del 40% de los adultos no absorbe adecuadamente la vitamina B12 en el estómago debido a la acidez gástrica o fármacos digestivos. La administración sublingual permite que las vitaminas pasen directamente a la microcirculación de la mucosa bucal, logrando una absorción hasta 5 veces más rápida y sin molestias estomacales."
+          </blockquote>
+          <p class="section-desc">
+            Cada porción de 1.5 ml (unas 5 gotas) aporta la dosis exacta recomendada para nutrir el sistema nervioso, acelerar el metabolismo celular y proteger tus células contra el envejecimiento prematuro.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ingredientes con Colores Oficiales de la Caja -->
+  <section style="padding: 50px 0; background: var(--bg-card);">
+    <div class="container">
+      <div style="text-align: center; max-width: 650px; margin: 0 auto 30px;">
+        <span class="badge-pill badge-gold" style="margin-bottom: 10px;">🧪 Alta Potencia Celular</span>
+        <h2 class="section-title">Fórmula Sinergética del Complejo B</h2>
+        <p class="section-desc">La combinación precisa de 5 nutrientes esenciales en cada gota.</p>
+      </div>
+
+      <div class="ingredients-grid">
+        {product.ingredients.map((ing) => (
+          <div class="ing-card">
+            <div class="ing-card-bar" style={`background-color: ${ing.color};`}></div>
+            <div class="ing-dose" style={`color: ${ing.color};`}>{ing.dose}</div>
+            <div class="ing-name">{ing.name}</div>
+            <p class="ing-desc">{ing.benefit}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Rutina Diaria en 3 Pasos -->
+  <section style="padding: 60px 0; background: var(--bg-main);">
+    <div class="container">
+      <div style="text-align: center; max-width: 650px; margin: 0 auto;">
+        <span class="badge-pill badge-red" style="margin-bottom: 10px;">⚡ Modo de Uso Sencillo</span>
+        <h2 class="section-title">Tu Nueva Rutina en 30 Segundos</h2>
+        <p class="section-desc">Olvídate de pastilleros complicados. Solo 1.5 ml al día.</p>
+      </div>
+
+      <div class="routine-grid">
+        {product.routineSteps.map((step) => (
+          <div class="routine-card">
+            <img class="routine-img" src={step.image} alt={step.title} />
+            <div class="routine-body">
+              <span class="routine-step-num">{step.step}</span>
+              <h3 class="routine-title">{step.title}</h3>
+              <p class="routine-desc">{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonios de Clientes -->
+  <section style="padding: 60px 0; background: var(--bg-card-alt);">
+    <div class="container">
+      <div style="text-align: center; max-width: 650px; margin: 0 auto;">
+        <div class="stars" style="margin-bottom: 8px;">★★★★★</div>
+        <h2 class="section-title">Resultados Reales de Clientes en Chile</h2>
+        <p class="section-desc">Experiencias de personas que incorporaron Nusava a su vida.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        {product.reviews.map((rev) => (
+          <div class="testim-card">
+            <div class="stars">★★★★★</div>
+            <p class="testim-comment">"{rev.comment}"</p>
+            <div class="testim-user">
+              <img class="testim-avatar" src={rev.avatar} alt={rev.author} />
+              <div class="testim-meta">
+                <h4>{rev.author}, {rev.age} años</h4>
+                <p>📍 {rev.city} · <span style="color: #4ADE80;">✔ Cliente Verificado</span></p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Formulario de Checkout Contra Entrega -->
+  <section class="container" id="checkoutSection">
+    <div class="section-checkout">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <span class="badge-pill badge-green" style="margin-bottom: 8px;">📦 PAGO CONTRA ENTREGA</span>
+        <h2 class="section-title" style="margin-bottom: 6px;">Completa tu Pedido</h2>
+        <p style="color: var(--text-muted); font-size: 0.92rem;">
+          Pagas en efectivo o transferencia bancaria al recibir tu paquete en casa.
+        </p>
+      </div>
+
+      <form id="orderForm" class="checkout-form">
+        <!-- Resumen Pack Seleccionado -->
+        <div class="order-summary-box">
+          <div>
+            <div style="font-size: 0.82rem; color: var(--text-muted);">Pack seleccionado:</div>
+            <strong id="summaryPackTitle" style="color: #FFFFFF; font-size: 1.05rem;">{defaultPack.title}</strong>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 0.82rem; color: #4ADE80;">Envío Gratis</div>
+            <strong id="summaryPackPrice" style="color: var(--b12-red); font-size: 1.35rem;">{formatCLP(defaultPack.finalPrice)}</strong>
+          </div>
+        </div>
+
+        <input type="hidden" id="formPackId" name="packId" value={defaultPack.id} />
+
+        <div class="form-group">
+          <label for="customerName">Nombre y Apellidos *</label>
+          <input type="text" id="customerName" name="customerName" placeholder="Ej: Juan Pérez Morales" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customerPhone">Teléfono WhatsApp *</label>
+            <input type="tel" id="customerPhone" name="customerPhone" placeholder="Ej: +56 9 1234 5678" required />
+          </div>
+          <div class="form-group">
+            <label for="customerEmail">Correo Electrónico (Opcional)</label>
+            <input type="email" id="customerEmail" name="customerEmail" placeholder="juan@gmail.com" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="regionSelect">Región *</label>
+            <select id="regionSelect" name="region" required>
+              <option value="">Selecciona tu región...</option>
+              {REGIONES_CHILE.map((r) => (
+                <option value={r.region}>{r.region}</option>
+              ))}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="comunaSelect">Comuna / Ciudad *</label>
+            <select id="comunaSelect" name="comuna" required disabled>
+              <option value="">Primero elige tu región</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">Dirección de Entrega (Calle, Número, Depto/Casa) *</label>
+          <input type="text" id="address" name="address" placeholder="Ej: Av. Providencia 1234, Depto 402" required />
+        </div>
+
+        <button type="submit" id="submitBtn" class="cta-main btn-pulse" style="margin-top: 10px;">
+          CONFIRMAR PEDIDO Y PAGAR AL RECIBIR ➜
+        </button>
+
+        <!-- Sellos de confianza al final del checkout -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 14px; opacity: 0.85;">
+          <img src="/media/logos/minsal.png" alt="MINSAL" style="height: 24px; width: auto;" />
+          <img src="/media/logos/cruz-verde.svg" alt="Cruz Verde" style="height: 22px; width: auto;" />
+          <img src="/media/logos/dr-simi.png" alt="Dr. Simi" style="height: 24px; width: auto;" />
+        </div>
+
+        <p style="text-align: center; font-size: 0.78rem; color: var(--text-muted); margin-top: 6px;">
+          🔒 Al presionar Confirmar, tu pedido queda reservado en el sistema y se abre WhatsApp para coordinar la entrega.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding: 40px 0 80px;">
+    <div class="container" style="max-width: 800px;">
+      <h2 class="section-title" style="text-align: center;">Preguntas Frecuentes</h2>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">¿Cómo se toma y cuál es la dosis diaria? <span>+</span></div>
+          <div class="faq-answer">Se toman 5 gotas al día (aproximadamente 1.5 ml) de forma sublingual: coloca las gotas debajo de tu lengua, mantenlas 30 segundos y luego traga. Esto garantiza absorción directa.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">¿Cómo funciona el Pago Contra Entrega? <span>+</span></div>
+          <div class="faq-answer">Pides hoy completando el formulario. Despachamos tu paquete a tu domicilio y pagas en efectivo o transferencia bancaria al repartidor de Starken/Chilexpress en el momento exacto en que te entrega tu caja.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">¿Está aprobado para su venta en farmacias de Chile? <span>+</span></div>
+          <div class="faq-answer">Sí. Nusava cumple rigurosamente con las normativas sanitarias chilenas del Ministerio de Salud (MINSAL) para suplementos de venta libre y se alinea con los estándares de control de cadenas como Farmacias Cruz Verde y Dr. Simi.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">¿Cuánto tarda en llegar mi pedido? <span>+</span></div>
+          <div class="faq-answer">En la Región Metropolitana tarda habitualmente de 24 a 48 horas hábiles. En regiones entre 2 a 4 días hábiles dependiendo de la comuna.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">¿Ayuda realmente con los zumbidos en los oídos? <span>+</span></div>
+          <div class="faq-answer">La vitamina B12 y B6 son indispensables para la vaina de mielina de los nervios auditivos. Muchos clientes con tinnitus presentan déficit de B12 y reportan notable alivio y tranquilidad auditiva tras 2 a 3 semanas de uso regular.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sticky Bottom Bar -->
+  <div class="sticky-bar">
+    <div class="sticky-info">
+      <span class="sticky-title" id="stickyPackTitle">Combo 2x1 (120 ml)</span>
+      <span class="sticky-price" id="stickyPackPrice">$29.990 CLP</span>
+    </div>
+    <a href="#checkoutSection" class="sticky-btn">
+      PAGAR AL RECIBIR ➜
+    </a>
+  </div>
+
+  <!-- Scripts Interactivos -->
+  <script define:vars={{ regionesData: REGIONES_CHILE }}>
+    // Cambiar imagen de galería
+    window.changeImage = function(src, btn) {
+      document.getElementById('mainImage').src = src;
+      document.querySelectorAll('.thumb-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    };
+
+    // Selección de Packs
+    const packCards = document.querySelectorAll('.pack-card');
+    const summaryTitle = document.getElementById('summaryPackTitle');
+    const summaryPrice = document.getElementById('summaryPackPrice');
+    const stickyTitle = document.getElementById('stickyPackTitle');
+    const stickyPrice = document.getElementById('stickyPackPrice');
+    const formPackId = document.getElementById('formPackId');
+
+    packCards.forEach(card => {
+      card.addEventListener('click', () => {
+        packCards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        
+        const radio = card.querySelector('input[type="radio"]');
+        if (radio) radio.checked = true;
+
+        const packId = card.getAttribute('data-pack-id');
+        const price = parseInt(card.getAttribute('data-price'), 10);
+        const title = card.getAttribute('data-title');
+        const formattedPrice = '$' + price.toLocaleString('es-CL') + ' CLP';
+
+        formPackId.value = packId;
+        summaryTitle.textContent = title;
+        summaryPrice.textContent = formattedPrice;
+        stickyTitle.textContent = title;
+        stickyPrice.textContent = formattedPrice;
+      });
+    });
+
+    // Cascada de Regiones y Comunas de Chile
+    const regionSelect = document.getElementById('regionSelect');
+    const comunaSelect = document.getElementById('comunaSelect');
+
+    regionSelect.addEventListener('change', () => {
+      const selectedRegion = regionSelect.value;
+      comunaSelect.innerHTML = '<option value="">Selecciona tu comuna...</option>';
+
+      if (!selectedRegion) {
+        comunaSelect.disabled = true;
+        return;
+      }
+
+      const match = regionesData.find(r => r.region === selectedRegion);
+      if (match && match.comunas) {
+        match.comunas.forEach(comuna => {
+          const opt = document.createElement('option');
+          opt.value = comuna;
+          opt.textContent = comuna;
+          comunaSelect.appendChild(opt);
+        });
+        comunaSelect.disabled = false;
+      }
+    });
+
+    // Envío del Formulario COD
+    const orderForm = document.getElementById('orderForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    orderForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'PROCESANDO TU PEDIDO...';
+
+      const formData = {
+        customerName: document.getElementById('customerName').value,
+        customerPhone: document.getElementById('customerPhone').value,
+        customerEmail: document.getElementById('customerEmail').value,
+        region: regionSelect.value,
+        comuna: comunaSelect.value,
+        address: document.getElementById('address').value,
+        packId: formPackId.value
+      };
+
+      try {
+        const res = await fetch('/api/orders/cod', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await res.json();
+
+        if (data.ok && data.whatsappUrl) {
+          window.location.href = data.whatsappUrl;
+        } else {
+          alert(data.error || 'Ocurrió un error. Por favor intenta de nuevo.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'CONFIRMAR PEDIDO Y PAGAR AL RECIBIR ➜';
+        }
+      } catch (err) {
+        alert('Error de conexión. Intenta nuevamente.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'CONFIRMAR PEDIDO Y PAGAR AL RECIBIR ➜';
+      }
+    });
+  </script>
+
+</body>
+</html>

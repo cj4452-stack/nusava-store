@@ -1,0 +1,90 @@
+/* Custom styles for Nusava B12 Store */
+:root {
+  --bg-main: #0B0D11;
+  --bg-card: #15181F;
+  --bg-card-alt: #1C212B;
+  --border-card: #2B323F;
+  --text-main: #F3F4F6;
+  --text-muted: #9CA3AF;
+  
+  /* Brand colors from packaging */
+  --b12-red: #E11D48;
+  --b12-red-hover: #BE123C;
+  --b6-coral: #F97316;
+  --b1-amber: #F59E0B;
+  --vegan-green: #48A127;
+  --gold-star: #FBBF24;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 90px; /* Space for sticky bar */
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Animations */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(225, 29, 72, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(225, 29, 72, 0.8);
+    transform: scale(1.02);
+  }
+}
+
+.btn-pulse {
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+/* Badges */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.badge-red {
+  background: rgba(225, 29, 72, 0.15);
+  color: #FB7185;
+  border: 1px solid rgba(225, 29, 72, 0.35);
+}
+
+.badge-green {
+  background: rgba(72, 161, 39, 0.15);
+  color: #4ADE80;
+  border: 1px solid rgba(72, 161, 39, 0.35);
+}
+
+.badge-gold {
+  background: rgba(245, 158, 11, 0.15);
+  color: #FCD34D;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}

@@ -1,0 +1,23 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nusava-store
+    restart: always
+    ports:
+      - "4321:4321"
+    environment:
+      - NODE_ENV=production
+      - PORT=4321
+      - HOST=0.0.0.0
+      - ROOT_DOMAIN=${ROOT_DOMAIN:-localhost}
+      - WHATSAPP_NUMBER=${WHATSAPP_NUMBER:-56912345678}
+      - DATABASE_PATH=/app/data/orders.db
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4321/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

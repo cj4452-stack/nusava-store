@@ -1,0 +1,15 @@
+node_modules
+dist
+.astro
+data/*.db
+data/*.db-wal
+data/*.db-shm
+.git
+.github
+.env
+nuevas_imagenes
+*.png
+*.jpg
+*.webp
+*.svg
+!public/**

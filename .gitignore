@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.astro/
+data/*.db
+data/*.db-wal
+data/*.db-shm
+.env
+.env.production
+.DS_Store
+Thumbs.db
+
+# Archivos crudos de scraping/prompts locales
+imgi_*
+competitor_page.html
+nuevas_imagenes/
+
