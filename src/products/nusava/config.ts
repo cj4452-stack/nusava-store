@@ -2,9 +2,9 @@ import type { ProductConfig } from '../types';
 
 export const nusavaConfig: ProductConfig = {
   slug: 'nusava-b12',
-  name: 'Nusava® Complejo de Vitamina B12 + B6 + B1',
-  tagline: 'Fórmula Líquida Sublingual de Alta Absorción para la Energía Celular y el Alivio de Zumbidos en el Oído',
-  volume: '60 ml por frasco (40 dosis diarias)',
+  name: '2x1 | Nusava® Complejo de Vitamina B12 + B6 + B1',
+  tagline: 'Fórmula Líquida Sublingual de Alta Potencia (5000 mcg). Apoyo al Sistema Nervioso, Metabolismo Energético y Alivio de Zumbidos en el Oído (Tinnitus)',
+  volume: '60 ml por frasco (120 ml en Combo 2x1)',
   flavor: 'Sabor Frambuesa Natural',
   badges: ['Vegano 100%', 'Sin Gluten', 'Non-GMO', 'Absorción Sublingual Rápida', 'Pago Contra Entrega'],
   packs: [
@@ -22,7 +22,7 @@ export const nusavaConfig: ProductConfig = {
       id: 'pack-2',
       bottles: 2,
       title: 'Combo 2x1 (120 ml)',
-      badge: 'OFERTA MÁS ELEGIDA · 70% DCTO',
+      badge: 'OFERTA MÁS ELEGIDA · PAGAS 1 LLEVAS 2',
       originalPrice: 99990,
       finalPrice: 29990,
       savings: 70000,
@@ -66,10 +66,10 @@ export const nusavaConfig: ProductConfig = {
     }
   ],
   tinnitusClaims: [
-    'Apoya la regeneración y protección de los nervios sensoriales auditivos.',
-    'Reduce la hiperexcitabilidad nerviosa que intensifica los pitidos y zumbidos nocturnos.',
-    'Estudios nutricionales asocian el déficit de B12 con acúfenos y fatiga neurológica prolongada.',
-    'Más de 14.300 clientes en Chile y Latinoamérica reportan mayor calma auditiva y mejor calidad de sueño tras 2-3 semanas.'
+    '5 gotas sublinguales al día: más de 10.000 clientes reportan hasta un 80% menos de zumbidos a los 17 días.',
+    'Apoya la regeneración y protección de la mielina en los nervios sensoriales auditivos.',
+    'Reduce la hiperexcitabilidad nerviosa que intensifica los pitidos molestos, especialmente de noche.',
+    'Mejora la calidad del descanso profundo al calmar la interferencia sonora constante en el silencio.'
   ],
   energyClaims: [
     'Absorción sublingual directa: evita el paso por el estómago y entra al torrente sanguíneo en minutos.',

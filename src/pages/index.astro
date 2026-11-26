@@ -175,6 +175,63 @@ const defaultPack = product.packs[1]; // Combo 2x1
       line-height: 1.45;
     }
 
+    /* Caja de Enfoque Principal (Competidor Hook) */
+    .competitor-focus-box {
+      background: rgba(225, 29, 72, 0.08);
+      border: 1px solid rgba(225, 29, 72, 0.35);
+      border-radius: 12px;
+      padding: 13px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 2px;
+    }
+
+    .focus-box-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .focus-badge {
+      background: var(--b12-red);
+      color: #FFFFFF;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 5px;
+      letter-spacing: 0.03em;
+    }
+
+    .focus-box-header strong {
+      font-size: 0.88rem;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+    }
+
+    .focus-stat-text {
+      font-size: 0.84rem;
+      color: #F1F5F9;
+      line-height: 1.4;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      padding: 9px 12px;
+      border-left: 3px solid var(--b12-red);
+    }
+
+    .focus-bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 0.8rem;
+      color: #CBD5E1;
+    }
+
+    .focus-bullets strong {
+      color: #FFFFFF;
+    }
+
     /* Packs Selector */
     .packs-selector {
       display: flex;
@@ -902,6 +959,22 @@ const defaultPack = product.packs[1]; // Combo 2x1
 
           <h1 class="product-title">{product.name}</h1>
           <p class="product-tagline">{product.tagline}</p>
+
+          <!-- Caja de Enfoque Principal (Competidor Hook: Tinnitus + 80% menos en 17 días) -->
+          <div class="competitor-focus-box">
+            <div class="focus-box-header">
+              <span class="focus-badge">🎯 ENFOQUE PRINCIPAL</span>
+              <strong>Personas con Tinnitus o Zumbidos en los Oídos</strong>
+            </div>
+            <p class="focus-stat-text">
+              👉 <strong>5 gotas al día de forma sublingual:</strong> Más de 10.000 clientes reportan hasta un <strong>80% menos de zumbidos</strong> a los 17 días tomando el complejo vitamínico B12.
+            </p>
+            <div class="focus-bullets">
+              <div>✔ <strong>Apoyo al Sistema Nervioso:</strong> La B12 protege la mielina del nervio auditivo.</div>
+              <div>✔ <strong>Mejor Descanso Nocturno:</strong> Ayuda a calmar los pitidos en el silencio.</div>
+              <div>✔ <strong>Gotero Sublingual Sabor Frambuesa:</strong> Absorción en segundos sin pastillas.</div>
+            </div>
+          </div>
 
           <!-- Packs Selector -->
           <div class="packs-selector" id="packsContainer">
